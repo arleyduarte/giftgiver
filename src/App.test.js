@@ -1,9 +1,25 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { shallow, mount, render } from 'enzyme';
 import App from './App';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+const app = shallow(<App />);
+
+it('renders correctly', () => {
+    expect(app).toMatchSnapshot();
+});
+
+it('initializas the `state` with a empty lis of gifs', () => {
+  expect(app.state().gifts).toEqual([]);
+});
+
+
+it('adds a new gift to `state` when clicking the `add gift` button', () => {
+  app.find('.btn-add').simulate('click');
+  expect(app.state().gifts).toEqual([{id: 1}]);
+});
+
+it('add a new gift tho the rendered lis whe clicking the `add gif', () => {
+
+  app.find('.btn-add').simulate('click');
+  expect(app.find('.gift-list').children().length).toEqual(2);
 });
